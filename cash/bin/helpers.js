@@ -1,3 +1,7 @@
+/**
+ * This file contains functions to be executed if the suer passes a specific parameter on the command line (-h, -s, -v)
+ */
+
 /*eslint-disable no-process-exit*/
 const chalk = require('chalk');
 const updateNotifier = require('update-notifier');
@@ -8,6 +12,10 @@ const config = new Conf();
 
 updateNotifier({pkg}).notify();
 
+/**
+ * Function used to save default currencies to a json configuration file
+ * @param argv arguments passed to the save option
+ */
 const saveCurrencies = argv => {
   config.set('defaultFrom', argv[1] || config.get('defaultFrom', 'USD'));
   config.set(
@@ -20,11 +28,17 @@ const saveCurrencies = argv => {
   process.exit(1);
 };
 
+/**
+ * Function used to show the pkg version on the console
+ */
 const version = () => {
   console.log(pkg.version);
   process.exit(1);
 };
 
+/**
+ * Function used to show help message on the console
+ */
 const help = () => {
   console.log(`
 Usage:
@@ -57,6 +71,10 @@ Examples:
   process.exit(1);
 };
 
+/**
+ * Function used in order to call right functions according to the parameters given by the user
+ * @param argv A list of argument given on the command line tool
+ */
 const helpers = argv => {
   // Version
   if (argv.indexOf('--version') !== - 1 || argv.indexOf('-v') !== - 1) {
@@ -72,6 +90,7 @@ const helpers = argv => {
     help();
   }
 
+  // Save
   if (
     argv.indexOf('--save') !== - 1
     || argv.indexOf('-s') !== - 1
